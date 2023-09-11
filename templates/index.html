@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioPen - James Arnold Nogra</title>
+    <!-- Add the favicon link -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/4.4.1_dist_css_bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200&family=Fraunces:opsz,wght@9..144,200&family=Lora&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
+</head>
+<body>
+
+    <div class="popup-container">
+        <div class="popup-white-opaque">&nbsp;</div>
+        <div class="popup-content-account">
+            <div class="popup-title">Account</div>
+            <div class="popup-orange-divider">&nbsp;</div>
+            <p>You aren't currently signed in.</p>
+            <div class="popup-button">
+                <span class="pill-button pill-orange">Sign in</span>
+            </div>
+        </div>
+        <div class="popup-content-settings">
+            <div class="popup-title">Settings</div>
+            <div class="popup-orange-divider">&nbsp;</div>
+        </div>
+    </div>
+
+    <div class="icon-container">
+        <div class="icon-margin icon-left icon-clickable">
+            <i id="icon-account" class="fas fa-user-circle fa-2x"></i>
+        </div>
+        <div class="icon-margin icon-right icon-clickable">
+            <i id="icon-settings" class="fas fa-cog fa-2x"></i>
+        </div>
+        <div class="icon-margin icon-bottom-left icon-clickable">
+            <i class="fas fa-arrow-circle-up fa-2x"></i>
+        </div>
+        <div class="icon-margin icon-bottom-right icon-clickable">
+            <i class="fas fa-pen-square fa-2x"></i>
+        </div>
+        <div class="icon-margin icon-bottom-center icon-clickable icon-microphone">
+            <i class="fas fa-microphone fa-2x"></i>
+        </div>
+    </div>
+    
+    <div class="middle-title">AudioPen</div>
+
+    <div class="middle-container">
+        <div class="middle-large-text">
+            Go from fuzzy thought to clear text. <i>Fast</i>.
+        </div>
+        <div class="middle-subtitle">
+            <b>AudioPen transforms messy voice notes into publish-ready text.</b><br />
+            Draft articles, memos, emails, and more. In a fraction of the time.
+        </div>
+        <br />
+        <div>
+            <span class="pill-button pill-orange">sign up / login</span>
+            <span class="pill-button">see how it works</span>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/code.jquery.com_jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/my.js') }}"></script>
+</body>
+</html>
