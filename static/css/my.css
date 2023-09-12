@@ -30,7 +30,7 @@ body {
 }
 .icon-bottom-center {
     position: fixed;
-    bottom: 0px;
+    bottom: -10px;
     left: 50%;
     transform: translate(-65%);
     text-align: center;
@@ -60,16 +60,42 @@ body {
     color: #ffffff;
 }
 
+.middle-container-recorder {
+    background-color: #ff5c0a;
+    color: #ffffff;
+    margin-top: 20px;
+    padding: 40px 20px;
+    border-radius: 20px;
+    width: 90%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+.middle-timer-recorder {
+    font-size: larger;
+}
+.middle-equalizer-recorder {
+    height: 45px;
+}
+.middle-buttons-recorder {
+    position: relative;
+    padding: 20px 10px 0px 10px;
+}
 .middle-title {
     font-size: larger;
     font-weight: bold;
     margin: 20px;
     padding: 5px;
     position: absolute;
+    top: -45%;
     left: 50%;
     transform: translate(-65%);
     text-align: center;
     border-bottom: 4px #ff5c0a solid;
+}
+.middle-title-recording {
+    font-size: larger;
+    font-weight: bold;
 }
 .middle-container {
     position: absolute;
@@ -79,7 +105,7 @@ body {
     text-align: center;
 }
 .middle-large-text {
-    font-size: 64px;
+    font-size: 62px;
 }
 .middle-subtitle {
     font-family: 'DM Sans', sans-serif;
