@@ -175,8 +175,21 @@ body {
     transform: translate(-50%);
     text-align: center;
 }
+.popup-transcribing {
+    z-index: 1004;
+    position: fixed;
+    top: 20%;
+    padding: 20px;
+    width: 40%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    background-color: #ff5c0a;
+    border-radius: 20px;
+    color: #ffffff;
+}
 @media (max-width: 768px) {
-    .popup-content-account, .popup-content-settings, .popup-recorder {
+    .popup-content-account, .popup-content-settings, .popup-recorder, .popup-transcribing {
         width: 90%;
     }
 }

@@ -66,12 +66,8 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
 )
 
 function saveAndSendAudio() {
+    startTranscribing()
     const blobObj = new Blob(audioChunks, { type: 'audio/webm' })
-
-    const audioUrl = URL.createObjectURL(blobObj)
-    const audio = new Audio(audioUrl)
-    audio.play()
-
     const formData = new FormData()
     clearInterval(intervalId)
     formData.append('audio', blobObj, 'recorded_audio.wav')
@@ -83,6 +79,11 @@ function saveAndSendAudio() {
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
+}
+
+function startTranscribing() {
+    $('.popup-recorder').hide()
+    $('.popup-transcribing').show()
 }
 
 function startTimer(duration) {

@@ -3,6 +3,12 @@ $(document).ready(function() {
     // Hide the popups
     $('.popup-container').hide()
 
+    // Cancel transcribing audio to text
+    $('#cancel-transcribing').click(function() {
+        closeAllPopups()
+        $('.popup-container').hide()
+    })
+
     // Click account icon
     $('#icon-account').click(function() {
         $('.popup-container').show()
@@ -29,4 +35,5 @@ function closeAllPopups() {
     $('.popup-content-account').hide()
     $('.popup-content-settings').hide()
     $('.popup-recorder').hide()
+    $('.popup-transcribing').hide()
 }
