@@ -1,5 +1,5 @@
 // Display timer variables
-const duration = 5
+const duration = 180
 let intervalId
 let currentTimeDisplay = ''
 
@@ -49,6 +49,8 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
         // stop recording when the stop button is clicked
         stopButton.addEventListener('click', () => {
             audioRecorder.stop()
+            const tracks = stream.getTracks()
+            tracks.forEach(track => track.stop())
         })
 
         // When x icon in the recorder is clicked, close the recorder popup
@@ -75,15 +77,16 @@ function saveAndSendAudio() {
         method: 'POST',
         body: formData,
     }).then(response => {
-        console.log("Audio sent successfully!", response)
+        // Success in sending audio data
+        console.log(response)
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
 }
 
 function startTranscribing() {
-    $('.popup-recorder').hide()
-    $('.popup-transcribing').show()
+    $('.middle-container-recorder').hide()
+    $('.middle-container-transcribing').show()
 }
 
 function startTimer(duration) {

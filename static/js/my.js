@@ -35,5 +35,5 @@ function closeAllPopups() {
     $('.popup-content-account').hide()
     $('.popup-content-settings').hide()
     $('.popup-recorder').hide()
-    $('.popup-transcribing').hide()
+    $('.middle-container-transcribing').hide()
 }

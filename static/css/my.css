@@ -60,7 +60,7 @@ body {
     color: #ffffff;
 }
 
-.middle-container-recorder {
+.middle-container-recorder, .middle-container-transcribing {
     background-color: #ff5c0a;
     color: #ffffff;
     margin-top: 20px;
