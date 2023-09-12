@@ -70,6 +70,7 @@ body {
     position: relative;
     left: 50%;
     transform: translate(-50%);
+    z-index: 1004;
 }
 .middle-timer-recorder {
     font-size: larger;
@@ -151,8 +152,29 @@ body {
     text-align: center;
     border-radius: 30px;
 }
+.icon-stop {
+    border: 1px solid  #f7f0f0;
+    background-color: #ff5c0a;
+    font-size: 32px;
+    width: 48px;
+    border-radius: 32px;
+    position: fixed;
+    bottom: -24px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.popup-recorder {
+    z-index: 1004;
+    position: fixed;
+    top: 20%;
+    padding: 20px;
+    width: 40%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
 @media (max-width: 768px) {
-    .popup-content-account, .popup-content-settings {
+    .popup-content-account, .popup-content-settings, .popup-recorder {
         width: 90%;
     }
 }
