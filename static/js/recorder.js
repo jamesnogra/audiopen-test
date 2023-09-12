@@ -1,39 +1,80 @@
 // Display timer variables
-const duration = 10
+const duration = 5
 let intervalId
 let currentTimeDisplay = ''
+
+// Recording controls
+const startButton = document.getElementById('microphone')
+const stopButton = document.getElementById('stop-recording')
+const cancelRecordingButton = document.getElementById('icon-close-recorder')
+let recordingStopped = false
+
 // Recording audio variables
-const audioChunks = []
-let mediaRecorder
+let audioRecorder
+let audioChunks = []
 
-function startRecording() {
-    askBrowserToUseMicrophone()
-    $('#timer').html(minutesAndSecondsFormatter(duration))
-    stopTimer()
-    startTimer(duration)
-}
+navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    
+        // Initialize the media recorder object
+        audioRecorder = new MediaRecorder(stream)
+        
+        // dataavailable event is fired when the recording is stopped and data audio needs to be saved
+        audioRecorder.addEventListener('dataavailable', e => {
+            audioChunks.push(e.data)
+            if (recordingStopped === false) {
+                saveAndSendAudio()
+            }
+        })
+        
+        // start recording when the start button is clicked
+        startButton.addEventListener('click', () => {
+            recordingStopped = false
+            // Stop any current running recording
+            if (audioRecorder !== null && audioRecorder.state === "recording") {
+                audioRecorder.stop()
+            }
+            // Show recording popup
+            $('.popup-container').show()
+            closeAllPopups()
+            $('.popup-recorder').show()
+            // Show timer for the recording popup
+            $('#timer').html(minutesAndSecondsFormatter(duration))
+            clearInterval(intervalId)
+            startTimer(duration)
+            // Start the recording
+            audioChunks = []
+            audioRecorder.start()
+        })
+        
+        // stop recording when the stop button is clicked
+        stopButton.addEventListener('click', () => {
+            audioRecorder.stop()
+        })
 
-// This function is only called when the user cancels recording and submission
-function stopRecording() {
-    if (mediaRecorder !== undefined) {
-        mediaRecorder.stop()
+        // When x icon in the recorder is clicked, close the recorder popup
+        cancelRecordingButton.addEventListener('click', () => {
+            audioRecorder.stop()
+            recordingStopped = true
+            clearInterval(intervalId)
+            $('.popup-container').hide()
+        })
+
+    }).catch(err => {
+        // If the user denies permission to record audio, then display an error.
+        console.log('Error: ' + err)
     }
-}
-
-// When the actual stop icon is clicked
-function stopAndSaveRecording() {
-    if (mediaRecorder !== undefined) {
-        mediaRecorder.stop()
-        audioChunks.length = 0
-        stopTimer()
-        saveAndSendAudio()
-    }
-}
+)
 
 function saveAndSendAudio() {
-    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
+    const blobObj = new Blob(audioChunks, { type: 'audio/webm' })
+
+    const audioUrl = URL.createObjectURL(blobObj)
+    const audio = new Audio(audioUrl)
+    audio.play()
+
     const formData = new FormData()
-    formData.append('audio', audioBlob, 'recorded_audio.wav')
+    clearInterval(intervalId)
+    formData.append('audio', blobObj, 'recorded_audio.wav')
     fetch('/upload-and-transcribe-audio', {
         method: 'POST',
         body: formData,
@@ -44,29 +85,6 @@ function saveAndSendAudio() {
     })
 }
 
-// Ask permission to use microphone
-function askBrowserToUseMicrophone() {
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-        mediaRecorder = new MediaRecorder(stream)
-        mediaRecorder.ondataavailable = event => {
-            if (event.data.size > 0) {
-                audioChunks.push(event.data)
-            }
-        }
-        // Clear previous chunks every start of recording
-        audioChunks.length = 0
-        mediaRecorder.start()
-        // Handle post-recording actions, if needed
-        mediaRecorder.onstop = () => {}
-        // On error
-        mediaRecorder.onerror = (event) => {
-            console.error("MediaRecorder error:", event.error)
-        }
-    }).catch(error => {
-        console.error("Error accessing microphone:", error)
-    })
-}
-
 function startTimer(duration) {
     let timer = duration
     intervalId = setInterval(function () {
@@ -74,7 +92,7 @@ function startTimer(duration) {
         if (--timer < 0) { // Stop timer and recording
             clearInterval(intervalId)
             currentTimeDisplay = '00:00'
-            stopAndSaveRecording()
+            stopButton.click()
         }
         $('#timer').html(currentTimeDisplay)
     }, 1000)
