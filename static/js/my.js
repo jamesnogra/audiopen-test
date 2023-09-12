@@ -10,6 +10,11 @@ $(document).ready(function() {
         $('.popup-recorder').show()
     })
 
+    // When x icon in the recorder is clicked, close the recorder popup
+    $('#icon-close-recorder').click(function() {
+        $('.popup-container').hide()
+    })
+
     // Click account icon
     $('#icon-account').click(function() {
         $('.popup-container').show()
@@ -24,6 +29,7 @@ $(document).ready(function() {
         $('.popup-content-settings').show()
     })
 
+    // When opaque background is clicked, close all popups
     $('.popup-container').click(function(e) {
         if (e.target.classList.contains('popup-white-opaque')) {
             $(this).hide()
