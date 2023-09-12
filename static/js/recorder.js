@@ -72,13 +72,21 @@ function saveAndSendAudio() {
     const blobObj = new Blob(audioChunks, { type: 'audio/webm' })
     const formData = new FormData()
     clearInterval(intervalId)
-    formData.append('audio', blobObj, 'recorded_audio.wav')
+    formData.append('audio', blobObj, 'recorded_audio.webm')
     fetch('/upload-and-transcribe-audio', {
         method: 'POST',
         body: formData,
     }).then(response => {
-        // Success in sending audio data
-        console.log(response)
+        // Success in sending audio
+        // Check if the response status is OK (200)
+        if (response.status === 200) {
+            return response.json() // Parse the JSON response
+        } else {
+            throw new Error('Error: ' + response.statusText)
+        }
+    }).then(data => {
+        // Success in sending audio, access the data
+        console.log(data); // Access the transcribed text
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
