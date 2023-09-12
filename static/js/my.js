@@ -8,11 +8,17 @@ $(document).ready(function() {
         $('.popup-container').show()
         closeAllPopups()
         $('.popup-recorder').show()
+        startRecording() // Implementation at recorder.js
     })
 
     // When x icon in the recorder is clicked, close the recorder popup
     $('#icon-close-recorder').click(function() {
         $('.popup-container').hide()
+    })
+
+    // When the stop recording icon is clicked
+    $('#stop-recording').click(function() {
+        stopAndSaveRecording()
     })
 
     // Click account icon
@@ -31,6 +37,7 @@ $(document).ready(function() {
 
     // When opaque background is clicked, close all popups
     $('.popup-container').click(function(e) {
+        stopRecording()
         if (e.target.classList.contains('popup-white-opaque')) {
             $(this).hide()
         }

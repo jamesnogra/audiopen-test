@@ -38,7 +38,7 @@
                 <b>Get from fuzzy thought to clear text.</b><i> Fast.</i><br />
             </div>
             <div class="middle-container-recorder">
-                <div class="middle-timer-recorder">2:59</div>
+                <div id="timer" class="middle-timer-recorder"></div>
                 <div class="middle-equalizer-recorder">
                     <img src="https://66.media.tumblr.com/tumblr_m9wojoZH131rfjowdo1_500.gif" width="100%" height="100%" />
                 </div>
@@ -50,7 +50,7 @@
                         <i class="far fa-times-circle"></i>
                     </div>
                 </div>
-                <div class="icon-stop icon-clickable">
+                <div id="stop-recording" class="icon-stop icon-clickable">
                     <i class="fas fa-stop"></i>
                 </div>
             </div>
@@ -70,8 +70,8 @@
         <div class="icon-margin icon-bottom-right icon-clickable">
             <i class="fas fa-pen-square fa-2x"></i>
         </div>
-        <div class="icon-margin icon-bottom-center icon-clickable icon-microphone">
-            <i id="microphone" class="fas fa-microphone fa-2x"></i>
+        <div id="microphone" class="icon-margin icon-bottom-center icon-clickable icon-microphone">
+            <i class="fas fa-microphone fa-2x"></i>
         </div>
     </div>
 
@@ -93,5 +93,6 @@
     
     <script src="{{ url_for('static', filename='js/code.jquery.com_jquery-3.7.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/my.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
 </body>
 </html>
