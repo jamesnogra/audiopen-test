@@ -13,63 +13,56 @@ let recordingStopped = false
 // Recording audio variables
 let audioRecorder
 let audioChunks = []
+let stream
 
-// Codes for the controls of the recorder
-navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    
-        // Initialize the media recorder object
-        audioRecorder = new MediaRecorder(stream)
-        
-        // dataavailable event is fired when the recording is stopped and data audio needs to be saved
-        audioRecorder.addEventListener('dataavailable', e => {
-            audioChunks.push(e.data)
-            if (recordingStopped === false) {
-                saveAndSendAudio()
-            }
-        })
-        
-        // start recording when the start button is clicked
-        startButton.addEventListener('click', () => {
-            recordingStopped = false
-            // Stop any current running recording
-            if (audioRecorder !== null && audioRecorder.state === "recording") {
-                audioRecorder.stop()
-            }
-            // Show recording popup
-            $('.popup-container').show()
-            closeAllPopups()
-            $('.popup-recorder').show()
-            // Show timer for the recording popup
-            $('#timer').html(minutesAndSecondsFormatter(duration))
-            stopTimer()
-            startTimer(duration)
-            // Start the recording
-            audioChunks = []
-            audioRecorder.start()
-        })
-        
-        // stop recording when the stop button is clicked
-        stopButton.addEventListener('click', () => {
-            audioRecorder.stop()
-            const tracks = stream.getTracks()
-            tracks.forEach(track => track.stop())
-        })
+// start recording when the start button is clicked
+startButton.addEventListener('click', async () => {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    audioRecorder = new MediaRecorder(stream)
+    startRecordingAudio()
+})
 
-        // When x icon in the recorder is clicked, close the recorder popup
-        cancelRecordingButton.addEventListener('click', () => {
-            cancelRecording()
-        })
-        // Same with clicking the white popup opaque background, cancel recording
-        popupWhiteBg.addEventListener('click', () => {
-            cancelRecording()
-        })
+// stop recording when the stop button is clicked
+stopButton.addEventListener('click', () => {
+    const tracks = stream.getTracks()
+    tracks.forEach(track => track.stop())
+})
 
-    }).catch(err => {
-        // If the user denies permission to record audio, then display an error.
-        console.log('Error: ' + err)
+// When x icon in the recorder is clicked, close the recorder popup
+cancelRecordingButton.addEventListener('click', () => {
+    cancelRecording()
+})
+// Same with clicking the white popup opaque background, cancel recording
+popupWhiteBg.addEventListener('click', () => {
+    cancelRecording()
+})
+
+// Start recording function
+function startRecordingAudio() {
+    recordingStopped = false
+    // Stop any current running recording
+    if (audioRecorder !== null && audioRecorder.state === "recording") {
+        audioRecorder.stop()
     }
-
-)
+    // Show recording popup
+    $('.popup-container').show()
+    closeAllPopups()
+    $('.popup-recorder').show()
+    // Show timer for the recording popup
+    $('#timer').html(minutesAndSecondsFormatter(duration))
+    stopTimer()
+    startTimer(duration)
+    // Start the recording
+    audioChunks = []
+    audioRecorder.start()
+    // dataavailable event is fired when the recording is stopped and data audio needs to be saved
+    audioRecorder.addEventListener('dataavailable', e => {
+        audioChunks.push(e.data)
+        if (recordingStopped === false) {
+            saveAndSendAudio()
+        }
+    })
+}
 
 // Cancels a recording, do not save and transcribe the audio
 function cancelRecording() {
