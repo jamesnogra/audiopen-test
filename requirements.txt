@@ -1,5 +1,4 @@
 Flask
 SpeechRecognition
-pyflac
 hugchat
 python-dotenv
