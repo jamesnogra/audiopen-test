@@ -15,6 +15,7 @@ running_port = os.getenv('PORT')
 from audio_to_text import convert_audio_to_text
 # GPT
 from gpt import summarize_transciption
+from gpt_flan_t5 import summarize_transciption_flan_t5
 
 app = Flask(__name__)
 if running_env == 'server':
@@ -38,7 +39,7 @@ def upload_audio():
         gpt_summary_text, gpt_title = summarize_transciption(full_transcribed_text) # Uses the model meta-llama/Llama-2-70b-chat-hf
         # If error on the Llama model, try another model
         if gpt_title == 'Error':
-            gpt_summary_text, gpt_title = summarize_transciption(full_transcribed_text)
+            gpt_summary_text, gpt_title = summarize_transciption_flan_t5(full_transcribed_text)
         if full_transcribed_text != 0:
             return {
                 'full_transcribed_text': full_transcribed_text, # Uses recognize_google of speech_recognition

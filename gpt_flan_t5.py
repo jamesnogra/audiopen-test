@@ -8,14 +8,14 @@ load_dotenv()
 
 API_TOKEN_HUGGINGFACE = os.getenv('HUGGING_FACE_TOKEN')
 
-def summarize_transciption(full_text):
+def summarize_transciption_flan_t5(full_text):
     print('Using google/flan-t5-base GPT model...')
     API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-base"
     headers = {"Authorization": f"Bearer {API_TOKEN_HUGGINGFACE}"}
     # For the summary
     body_summary = {"inputs": f'Summarize as few words as possible the text "{full_text}"?'}
     response_summary = requests.request("POST", API_URL, headers=headers, data= json.dumps(body_summary))
-    body_title = {"inputs": f'Can you summarize in less than 10 words the text "{full_text}"?'}
+    body_title = {"inputs": f'Can you make a title for the text "{full_text}"?'}
     response_title = requests.request("POST", API_URL, headers=headers, data= json.dumps(body_title))
     # For the title
     try:
