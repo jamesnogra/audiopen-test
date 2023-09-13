@@ -15,8 +15,10 @@ def convert_audio_to_text(full_filename):
             return text
         except sr.UnknownValueError:
             print("Could not understand audio")
+            return 0
         except sr.RequestError as e:
             print("Error with the speech recognition service: {0}".format(e))
+            return 0
 
 def convert_webm_to_wav(input_file, output_file):
     try:

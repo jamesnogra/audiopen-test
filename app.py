@@ -22,11 +22,14 @@ def upload_audio():
         audio_file.save(filename_save_as)
         # Transcribe audio
         full_transcribed_text = convert_audio_to_text(filename_save_as)
-        gpt_summary_text = ''
-        return {
-            'full_transcribed_text': full_transcribed_text,
-            'gpt_summary_text': gpt_summary_text
-        }, 200
+        if full_transcribed_text != 0:
+            gpt_summary_text = ''
+            return {
+                'full_transcribed_text': full_transcribed_text,
+                'gpt_summary_text': gpt_summary_text
+            }, 200
+        else:
+            return full_transcribed_text, 200
     except Exception as e:
         return str(e), 400
 

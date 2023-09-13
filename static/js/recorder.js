@@ -7,12 +7,14 @@ let currentTimeDisplay = ''
 const startButton = document.getElementById('microphone')
 const stopButton = document.getElementById('stop-recording')
 const cancelRecordingButton = document.getElementById('icon-close-recorder')
+const popupWhiteBg = document.getElementById('popup-white-opaque')
 let recordingStopped = false
 
 // Recording audio variables
 let audioRecorder
 let audioChunks = []
 
+// Codes for the controls of the recorder
 navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
     
         // Initialize the media recorder object
@@ -39,7 +41,7 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
             $('.popup-recorder').show()
             // Show timer for the recording popup
             $('#timer').html(minutesAndSecondsFormatter(duration))
-            clearInterval(intervalId)
+            stopTimer()
             startTimer(duration)
             // Start the recording
             audioChunks = []
@@ -55,23 +57,34 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
 
         // When x icon in the recorder is clicked, close the recorder popup
         cancelRecordingButton.addEventListener('click', () => {
-            audioRecorder.stop()
-            recordingStopped = true
-            clearInterval(intervalId)
-            $('.popup-container').hide()
+            cancelRecording()
+        })
+        // Same with clicking the white popup opaque background, cancel recording
+        popupWhiteBg.addEventListener('click', () => {
+            cancelRecording()
         })
 
     }).catch(err => {
         // If the user denies permission to record audio, then display an error.
         console.log('Error: ' + err)
     }
+
 )
 
+// Cancels a recording, do not save and transcribe the audio
+function cancelRecording() {
+    audioRecorder.stop()
+    recordingStopped = true
+    stopTimer()
+    $('.popup-container').hide()
+}
+
+// Saves the recording audtio and sends it to the flask service for transciptions
 function saveAndSendAudio() {
-    startTranscribing()
+    showStartTranscribingUi()
     const blobObj = new Blob(audioChunks, { type: 'audio/webm' })
     const formData = new FormData()
-    clearInterval(intervalId)
+    stopTimer()
     formData.append('audio', blobObj, 'recorded_audio.webm')
     fetch('/upload-and-transcribe-audio', {
         method: 'POST',
@@ -86,23 +99,25 @@ function saveAndSendAudio() {
         }
     }).then(data => {
         // Success in sending audio, access the data
-        console.log(data); // Access the transcribed text
+        console.log(data) // Access the transcribed text
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
 }
 
-function startTranscribing() {
+// Shows the popup UI for the transcribing of audio to text
+function showStartTranscribingUi() {
     $('.middle-container-recorder').hide()
     $('.middle-container-transcribing').show()
 }
 
+// Starts the timer of the recorder
 function startTimer(duration) {
     let timer = duration
     intervalId = setInterval(function () {
         currentTimeDisplay = minutesAndSecondsFormatter(timer)
         if (--timer < 0) { // Stop timer and recording
-            clearInterval(intervalId)
+            stopTimer()
             currentTimeDisplay = '00:00'
             stopButton.click()
         }
@@ -110,10 +125,12 @@ function startTimer(duration) {
     }, 1000)
 }
 
+// Stops the timer of the recorder and clears the interval
 function stopTimer() {
     clearInterval(intervalId) // Stop timer
 }
 
+// Formats the display timer of the recorder to minutes and seconds
 function minutesAndSecondsFormatter(timer) {
     let minutes, seconds
     minutes = parseInt(timer / 60, 10)
