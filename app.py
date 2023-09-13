@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sslify import SSLify
+from datetime import datetime
 import random
 import string
 from dotenv import load_dotenv
@@ -34,10 +35,13 @@ def upload_audio():
         audio_file.save(filename_save_as)
         # Transcribe audio
         full_transcribed_text = convert_audio_to_text(filename_save_as)
+        gpt_summary_text, gpt_title = summarize_transciption(full_transcribed_text) # Uses the model meta-llama/Llama-2-70b-chat-hf
         if full_transcribed_text != 0:
             return {
                 'full_transcribed_text': full_transcribed_text, # Uses recognize_google of speech_recognition
-                'gpt_summary_text': summarize_transciption(full_transcribed_text) # Uses the model meta-llama/Llama-2-70b-chat-hf
+                'gpt_summary_text': gpt_summary_text,
+                'gpt_title': gpt_title,
+                'date': datetime.today().strftime('%b %d, %Y')
             }, 200
         else:
             return 'Error', 200
@@ -55,4 +59,4 @@ if __name__ == '__main__':
             )
         )
     else:
-        app.run(host='0.0.0.0', port=running_port)
+        app.run(host='0.0.0.0', port=running_port, debug=True)

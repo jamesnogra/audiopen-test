@@ -16,7 +16,11 @@ cookie_path_dir = "./cookies_snapshot"
 # Summarizes a long text
 def summarize_transciption(full_text):
     sign.saveCookiesToDir(cookie_path_dir)
-    # Create a ChatBot
+    # Create the summary
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())  # or cookie_path="usercookies/<email>.json"
     summary = chatbot.chat(f'Summarize as few words as possible the text "{full_text}"?')
-    return summary.replace('<|endoftext|>', '')
+    # New a conversation to create a title
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    title = chatbot.chat(f'Can you summarize in less than 10 words the text "{full_text}"?')
+    return summary.replace('<|endoftext|>', ''), title.replace('<|endoftext|>', '')

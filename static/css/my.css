@@ -35,13 +35,20 @@ body {
     transform: translate(-65%);
     text-align: center;
 }
+.icon-center-copy {
+    position: fixed;
+    left: 48%;
+    bottom: 0px;
+    transform: translate(-70%);
+    text-align: center;
+}
 .icon-clickable {
     cursor: pointer;
 }
 .icon-microphone {
     font-size: 24px;
     background-color: #ff5c0a;
-    color: #ffffff;
+    color: #f8f0f0;
     padding: 24px;
     border-radius: 100%;
     width: 96px;
@@ -57,12 +64,12 @@ body {
 }
 .pill-orange {
     background-color: #ff5c0a;
-    color: #ffffff;
+    color: #f8f0f0;
 }
 
 .middle-container-recorder, .middle-container-transcribing {
     background-color: #ff5c0a;
-    color: #ffffff;
+    color: #f8f0f0;
     margin-top: 20px;
     padding: 40px 20px;
     border-radius: 20px;
@@ -71,6 +78,9 @@ body {
     left: 50%;
     transform: translate(-50%);
     z-index: 1004;
+}
+.middle-container-output {
+    background-color: black;
 }
 .middle-timer-recorder {
     font-size: larger;
@@ -95,7 +105,7 @@ body {
     border-bottom: 4px #ff5c0a solid;
 }
 .middle-title-recording {
-    font-size: larger;
+    font-size: x-large;
     font-weight: bold;
 }
 .middle-container {
@@ -107,6 +117,7 @@ body {
 }
 .middle-large-text {
     font-size: 62px;
+    margin-top: -32px;
 }
 .middle-subtitle {
     font-family: 'DM Sans', sans-serif;
@@ -124,18 +135,22 @@ body {
     }
     .middle-large-text {
         font-size: 32px;
+        margin-top: 20px;
     }
 }
 
-.popup-container {
+.popup-container, .popup-output-container {
     width: 100%;
     height: 100%;
     position: fixed;
     z-index: 1000;
 }
 .popup-white-opaque {
+    position: fixed;
     width: 100%;
     height: 100%;
+    top: 0px;
+    left: 0px;
     background-color: rgba(128, 128, 128, 0.1);
     backdrop-filter: blur(10px);
     z-index: 1001;
@@ -186,7 +201,7 @@ body {
     text-align: center;
     background-color: #ff5c0a;
     border-radius: 20px;
-    color: #ffffff;
+    color: #f8f0f0;
 }
 @media (max-width: 768px) {
     .popup-content-account, .popup-content-settings, .popup-recorder, .popup-transcribing {
@@ -212,4 +227,95 @@ body {
     margin-top: 10px;
     left: 50%;
     transform: translate(-50%);
+}
+.popup-output-position-size {
+    position: fixed;
+    z-index: 1005;
+    position: fixed;
+    top: 10%;
+    padding: 20px;
+    width: 70%;
+    max-width: 500px;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+.popup-output-container  {
+    width: 70%;
+    height: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+.popup-output {
+    background-color: #46475c;
+    color: #f8f0f0;
+    border-radius: 20px;
+    text-align: center;
+    padding: 20px;
+    width: 65%;
+}
+@media (max-width: 768px) {
+    .popup-output, .popup-output-middle, .popup-output-container {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+.popup-output-title {
+    font-size: xx-large;
+    font-weight: bold;
+}
+.popup-output-date {
+    margin: 20px;
+}
+.popup-output-summary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: larger;
+}
+.popup-output-flex {
+    z-index: 1005;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 25%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+}
+.popup-original-transcript-container {
+    z-index: 9999;
+    width: 40%;
+    max-width: 500px;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+}
+@media (max-width: 768px) {
+    .popup-original-transcript-container {
+        width: 80%;
+        max-width: 80%;
+    }
+}
+.popup-original-transcript-content {
+    background-color: #f8f0f0;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 20px;
+}
+.popup-original-transcript-toggle {
+    background-color: #ff5c0a;
+    color: #f8f0f0;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    position: relative;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 10px;
+    font-size: small;
+}
+.popup-output-bottom-buttons {
+    display: flex;          /* Use flexbox */
+    justify-content: space-between; /* Distribute items along the main axis with space-between */
+    align-items: center;
 }

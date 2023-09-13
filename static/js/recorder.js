@@ -92,10 +92,24 @@ function saveAndSendAudio() {
         }
     }).then(data => {
         // Success in sending audio, access the data
-        console.log(data) // Access the transcribed text
+        showOutputPopup(data)
+        
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
+}
+
+// Shows the popup UI for the output
+function showOutputPopup(data) {
+    closeAllPopups()
+    $('.popup-container').hide()
+    $('.popup-output-container').show() // Show the output popup
+    $('.popup-original-transcript-content').hide() // Hide the original text by default
+    // Put the output on the html elements
+    $('.popup-output-title').html(data.gpt_title)
+    $('.popup-output-date').html(data.date)
+    $('.popup-output-summary').html(data.gpt_summary_text)
+    $('.popup-original-transcript-content').html(data.full_transcribed_text)
 }
 
 // Shows the popup UI for the transcribing of audio to text

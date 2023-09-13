@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     // Hide the popups
     $('.popup-container').hide()
+    // Hide the output popup
+    $('.popup-output-container').hide()
 
     // Cancel transcribing audio to text
     $('#cancel-transcribing').click(function() {
@@ -29,6 +31,18 @@ $(document).ready(function() {
             $(this).hide()
         }
     })
+
+    // Output transcript toggle original text from audio
+    $('.popup-original-transcript-toggle').click(function() {
+        const transcriptContent = $('.popup-original-transcript-content')
+        if (transcriptContent.is(':visible')) {
+            transcriptContent.hide('fast', 'swing')
+            $('.popup-original-transcript-toggle').html('show original transcript')
+        } else {
+            transcriptContent.show('show', 'swing')
+            $('.popup-original-transcript-toggle').html('hide original transcript')
+        }
+    })
 }) 
 
 function closeAllPopups() {
@@ -36,4 +50,5 @@ function closeAllPopups() {
     $('.popup-content-settings').hide()
     $('.popup-recorder').hide()
     $('.middle-container-transcribing').hide()
+    $('.popup-output-container').hide()
 }
