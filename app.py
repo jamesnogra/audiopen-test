@@ -4,6 +4,8 @@ import string
 
 # Audio to text function
 from audio_to_text import convert_audio_to_text
+# GPT
+from gpt import summarize_transciption
 
 app = Flask(__name__)
 
@@ -26,7 +28,7 @@ def upload_audio():
             gpt_summary_text = ''
             return {
                 'full_transcribed_text': full_transcribed_text,
-                'gpt_summary_text': gpt_summary_text
+                'gpt_summary_text': summarize_transciption(full_transcribed_text)
             }, 200
         else:
             return full_transcribed_text, 200
