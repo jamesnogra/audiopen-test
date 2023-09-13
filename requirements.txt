@@ -3,3 +3,4 @@ SpeechRecognition
 hugchat
 python-dotenv
 flask_sslify
+openai

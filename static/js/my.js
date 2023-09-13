@@ -43,6 +43,11 @@ $(document).ready(function() {
             $('.popup-original-transcript-toggle').html('hide original transcript')
         }
     })
+
+    // Close popup output when the opaque white background is clicked
+    $('#popup-output-white-opaque').click(function() {
+        closeAllPopups()
+    })
 }) 
 
 function closeAllPopups() {

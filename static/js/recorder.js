@@ -66,10 +66,12 @@ function startRecordingAudio() {
 
 // Cancels a recording, do not save and transcribe the audio
 function cancelRecording() {
-    audioRecorder.stop()
-    recordingStopped = true
-    stopTimer()
-    $('.popup-container').hide()
+    try {
+        audioRecorder.stop()
+        recordingStopped = true
+        stopTimer()
+        $('.popup-container').hide()
+    } catch {}
 }
 
 // Saves the recording audtio and sends it to the flask service for transciptions
@@ -88,12 +90,12 @@ function saveAndSendAudio() {
         if (response.status === 200) {
             return response.json() // Parse the JSON response
         } else {
-            throw new Error('Error: ' + response.statusText)
+            alert('Error: ' + response.statusText)
+            closeAllPopups()
         }
     }).then(data => {
         // Success in sending audio, access the data
         showOutputPopup(data)
-        
     }).catch(error => {
         console.error("Error sending audio:", error)
     })
@@ -101,8 +103,12 @@ function saveAndSendAudio() {
 
 // Shows the popup UI for the output
 function showOutputPopup(data) {
-    closeAllPopups()
+    if (data === undefined || data === 'Error') {
+        window.location.reload()
+        return
+    }
     $('.popup-container').hide()
+    closeAllPopups()
     $('.popup-output-container').show() // Show the output popup
     $('.popup-original-transcript-content').hide() // Hide the original text by default
     // Put the output on the html elements
