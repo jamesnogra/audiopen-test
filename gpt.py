@@ -1,8 +1,14 @@
+# Uses the model meta-llama/Llama-2-70b-chat-hf according to https://github.com/Soulter/hugging-chat-api
 from hugchat import hugchat
 from hugchat.login import Login
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Log in to huggingface and grant authorization to huggingchat
-sign = Login('james.arnold.nogra@fullspeedtechnologies.com', 'Qwerty789&theBrownFox41')
+sign = Login(os.getenv('GPT_EMAIL'), os.getenv('GPT_PASSWORD'))
 # Save cookies to the local directory
 cookies = sign.login()
 cookie_path_dir = "./cookies_snapshot"

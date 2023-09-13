@@ -25,10 +25,9 @@ def upload_audio():
         # Transcribe audio
         full_transcribed_text = convert_audio_to_text(filename_save_as)
         if full_transcribed_text != 0:
-            gpt_summary_text = ''
             return {
-                'full_transcribed_text': full_transcribed_text,
-                'gpt_summary_text': summarize_transciption(full_transcribed_text)
+                'full_transcribed_text': full_transcribed_text, # Uses recognize_google of speech_recognition
+                'gpt_summary_text': summarize_transciption(full_transcribed_text) # Uses the model meta-llama/Llama-2-70b-chat-hf
             }, 200
         else:
             return full_transcribed_text, 200
