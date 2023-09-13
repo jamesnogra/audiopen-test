@@ -11,7 +11,7 @@
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200&family=Fraunces:opsz,wght@9..144,200&family=Lora&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200&family=Fraunces:opsz,wght@9..144,100&family=Lora&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
 </head>
@@ -75,7 +75,7 @@
                 <div class="popup-output-summary"></div>
                 <div class="popup-orange-divider">&nbsp;</div>
                 <div class="popup-output-bottom-buttons">
-                    <div class="icon-margin icon-clickable">
+                    <div id="icon-trash" class="icon-margin icon-clickable">
                         <i class="fas fa-trash fa-2x"></i>
                     </div>
                     <div class="icon-margin icon-clickable">
@@ -125,6 +125,33 @@
             <span class="pill-button pill-orange">sign up / login</span>
             <span class="pill-button">see how it works</span>
         </div>
+    </div>
+
+    <div class="reviews-container">
+        {% for review in review_list%}
+            <div class="review-item-outer-container">
+                <div class="review-item-container">
+                    <div class="review-user-container">
+                        <div class="review-user-picture">
+                            <img src="{{ review.photo }}" height="100%" />
+                        </div>
+                        <div class="review-user-name-container">
+                            <div class="review-user-name">{{ review.name }}</div>
+                            <div class="review-user-sub-name"><small>@twitteruser</small></div>
+                        </div>
+                        <div class="review-user-social">
+                            <i class="fab fa-{{ review.social_media }} fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        {% for _ in range(review.rating) %}
+                            <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <div>{{ review.review }}</div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
     
     <script src="{{ url_for('static', filename='js/code.jquery.com_jquery-3.7.1.min.js') }}"></script>

@@ -45,7 +45,8 @@ $(document).ready(function() {
     })
 
     // Close popup output when the opaque white background is clicked
-    $('#popup-output-white-opaque').click(function() {
+    $('#icon-trash').click(function() {
+        $('.popup-output-container').hide()
         closeAllPopups()
     })
 }) 

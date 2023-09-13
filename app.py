@@ -16,6 +16,8 @@ from audio_to_text import convert_audio_to_text
 # GPT
 from gpt import summarize_transciption
 from gpt_flan_t5 import summarize_transciption_flan_t5
+# Fake reviews
+from reviews import review_list
 
 app = Flask(__name__)
 if running_env == 'server':
@@ -23,7 +25,7 @@ if running_env == 'server':
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', review_list=review_list)
 
 @app.route('/upload-and-transcribe-audio', methods=['POST'])
 def upload_audio():
