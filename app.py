@@ -39,6 +39,6 @@ def upload_audio():
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=443,
+        port=8443,
         ssl_context=("/etc/letsencrypt/live/www.iamcebu.com/fullchain.pem", "/etc/letsencrypt/live/www.iamcebu.com/privkey.pem")
     )
