@@ -2,6 +2,13 @@ from flask import Flask, render_template, request
 from flask_sslify import SSLify
 import random
 import string
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+running_env = os.getenv('ENV')
+running_port = os.getenv('PORT')
 
 # Audio to text function
 from audio_to_text import convert_audio_to_text
@@ -9,7 +16,8 @@ from audio_to_text import convert_audio_to_text
 from gpt import summarize_transciption
 
 app = Flask(__name__)
-sslify = SSLify(app)
+if running_env == 'server':
+    sslify = SSLify(app)
 
 @app.route('/')
 def index():
@@ -37,8 +45,14 @@ def upload_audio():
         return str(e), 400
 
 if __name__ == '__main__':
-    app.run(
-        host='0.0.0.0',
-        port=8443,
-        ssl_context=("/etc/letsencrypt/live/www.iamcebu.com/fullchain.pem", "/etc/letsencrypt/live/www.iamcebu.com/privkey.pem")
-    )
+    if running_env == 'server':
+        app.run(
+            host='0.0.0.0',
+            port=running_port,
+            ssl_context=(
+                "/etc/letsencrypt/live/www.iamcebu.com/fullchain.pem",
+                "/etc/letsencrypt/live/www.iamcebu.com/privkey.pem"
+            )
+        )
+    else:
+        app.run(host='0.0.0.0', port=running_port)
