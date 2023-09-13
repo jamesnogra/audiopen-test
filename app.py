@@ -40,7 +40,7 @@ def upload_audio():
                 'gpt_summary_text': summarize_transciption(full_transcribed_text) # Uses the model meta-llama/Llama-2-70b-chat-hf
             }, 200
         else:
-            return full_transcribed_text, 200
+            return 'Error', 200
     except Exception as e:
         return str(e), 400
 
