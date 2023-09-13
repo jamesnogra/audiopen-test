@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask_sslify import SSLify
 import random
 import string
 
@@ -8,6 +9,7 @@ from audio_to_text import convert_audio_to_text
 from gpt import summarize_transciption
 
 app = Flask(__name__)
+sslify = SSLify(app)
 
 @app.route('/')
 def index():
@@ -35,4 +37,8 @@ def upload_audio():
         return str(e), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(
+        host='0.0.0.0',
+        port=443,
+        ssl_context=("/etc/letsencrypt/live/www.iamcebu.com/fullchain.pem", "/etc/letsencrypt/live/www.iamcebu.com/privkey.pem")
+    )
