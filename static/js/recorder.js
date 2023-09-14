@@ -28,6 +28,8 @@ startButton.addEventListener('click', async () => {
         return
     }
     startRecordingAudio()
+},(err) => {
+    console.error(err);
 })
 
 // stop recording when the stop button is clicked
