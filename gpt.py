@@ -20,7 +20,7 @@ def summarize_transciption(full_text):
         sign.saveCookiesToDir(cookie_path_dir)
         # Create the summary
         chatbot = hugchat.ChatBot(cookies=cookies.get_dict())  # or cookie_path="usercookies/<email>.json"
-        summary = chatbot.chat(f'Summarize as few words as possible the text "{full_text}"?')
+        summary = chatbot.chat(f'What would be the appropriate summary of `{full_text}`? Just give the summary directly.')
         # New a conversation to create a title
         print('Getting title from the full text using meta-llama/Llama-2-70b-chat-hf model...')
         id = chatbot.new_conversation()
