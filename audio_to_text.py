@@ -5,8 +5,8 @@ import os
 # Converts an audio file to text
 def convert_audio_to_text(full_filename):
     wav_file = 'uploads/test.wav'
-    # Convert first webm to PCM wav
-    convert_webm_to_wav(full_filename, wav_file)
+    # Convert first to PCM wav
+    convert_wav_file(full_filename, wav_file)
     recognizer = sr.Recognizer()
     # Load the audio file using speech_recognition
     with sr.AudioFile(wav_file) as source:
@@ -24,8 +24,8 @@ def convert_audio_to_text(full_filename):
             print("Error with the speech recognition service: {0}".format(e))
             return 0
 
-# Converts a webm audio format to wav
-def convert_webm_to_wav(input_file, output_file):
+# Converts to a PCM wav file
+def convert_wav_file(input_file, output_file):
     try:
         # Run FFmpeg command to convert webm to WAV
         subprocess.run(['ffmpeg', '-i', input_file, '-f', 'wav', output_file, '-y'], check=True)

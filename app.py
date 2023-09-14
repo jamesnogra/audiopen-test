@@ -30,8 +30,9 @@ def index():
 @app.route('/upload-and-transcribe-audio', methods=['POST'])
 def upload_audio():
     try:
+        audio_format = request.form.get('audioFormat')
         filename = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
-        filename_save_as = f'uploads/{filename}.webm'
+        filename_save_as = f'uploads/{filename}.{audio_format}'
         # Get the audio file from the POST request
         audio_file = request.files['audio']
         # Save the audio file to a directory (e.g., 'uploads')

@@ -22,7 +22,7 @@ def summarize_transciption(full_text):
         chatbot = hugchat.ChatBot(cookies=cookies.get_dict())  # or cookie_path="usercookies/<email>.json"
         summary = chatbot.chat(f'Summarize as few words as possible the text "{full_text}"?')
         # New a conversation to create a title
-        print('Getting title from the full text...')
+        print('Getting title from the full text using meta-llama/Llama-2-70b-chat-hf model...')
         id = chatbot.new_conversation()
         chatbot.change_conversation(id)
         title = chatbot.chat(f'Can you summarize in less than 10 words the text "{full_text}"?')

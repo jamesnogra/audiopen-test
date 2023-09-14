@@ -14,11 +14,18 @@ let recordingStopped = false
 let audioRecorder
 let audioChunks = []
 let stream
+const audioFormat = 'webm'
+const audioMimeType = 'audio/'+audioFormat
 
 // start recording when the start button is clicked
 startButton.addEventListener('click', async () => {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-    audioRecorder = new MediaRecorder(stream)
+    if (MediaRecorder.isTypeSupported(audioMimeType)) {
+        audioRecorder = new MediaRecorder(stream, {audioMimeType})
+    } else {
+        audioRecorder = new MediaRecorder(stream)
+        alert('Type '+audioMimeType+' is not supported on this browser')
+    }
     startRecordingAudio()
 })
 
@@ -77,10 +84,11 @@ function cancelRecording() {
 // Saves the recording audtio and sends it to the flask service for transciptions
 function saveAndSendAudio() {
     showStartTranscribingUi()
-    const blobObj = new Blob(audioChunks, { type: 'audio/wav' })
+    const blobObj = new Blob(audioChunks, { type: audioMimeType+'; codecs=opus' })
     const formData = new FormData()
     stopTimer()
-    formData.append('audio', blobObj, 'recorded_audio.wav')
+    formData.append('audio', blobObj, 'recorded_audio.'+audioFormat)
+    formData.append('audioFormat', audioFormat)
     fetch('/upload-and-transcribe-audio', {
         method: 'POST',
         body: formData,
