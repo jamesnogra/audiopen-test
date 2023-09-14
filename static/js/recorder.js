@@ -21,10 +21,11 @@ const audioMimeType = 'audio/'+audioFormat
 startButton.addEventListener('click', async () => {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     if (MediaRecorder.isTypeSupported(audioMimeType)) {
-        audioRecorder = new MediaRecorder(stream, {audioMimeType})
+        audioRecorder = new MediaRecorder(stream, {mimeType: audioMimeType})
     } else {
         audioRecorder = new MediaRecorder(stream)
-        alert('Type '+audioMimeType+' is not supported on this browser')
+        alert('Type '+audioMimeType+' is not supported on this browser. Tested only in Chrome desktop.')
+        return
     }
     startRecordingAudio()
 })
@@ -84,7 +85,7 @@ function cancelRecording() {
 // Saves the recording audtio and sends it to the flask service for transciptions
 function saveAndSendAudio() {
     showStartTranscribingUi()
-    const blobObj = new Blob(audioChunks, { type: audioMimeType+'; codecs=opus' })
+    const blobObj = new Blob(audioChunks, { type: audioMimeType })
     const formData = new FormData()
     stopTimer()
     formData.append('audio', blobObj, 'recorded_audio.'+audioFormat)
