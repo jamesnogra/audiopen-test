@@ -7,6 +7,7 @@
     <!-- Add the favicon link -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/4.4.1_dist_css_bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,7 +56,10 @@
                 </div>
             </div>
             <div class="middle-container-transcribing">
-                <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/04de2e31234507.564a1d23645bf.gif" height="50px" />
+                <!--<img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/04de2e31234507.564a1d23645bf.gif" height="50px" />-->
+                <div class="loader-container">
+                    <span class="loader">&nbsp;</span>
+                </div>
                 <div>(2/3) transcribing</div>
                 <div id="cancel-transcribing" class="icon-clickable"><small><u>cancel</u></small></div>
             </div>
