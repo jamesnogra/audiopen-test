@@ -152,8 +152,9 @@ body {
     height: 100%;
     top: 0px;
     left: 0px;
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: rgba(128, 128, 128, 0.5);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1001;
 }
 .popup-content-account, .popup-content-settings {
