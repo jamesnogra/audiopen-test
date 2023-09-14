@@ -77,10 +77,10 @@ function cancelRecording() {
 // Saves the recording audtio and sends it to the flask service for transciptions
 function saveAndSendAudio() {
     showStartTranscribingUi()
-    const blobObj = new Blob(audioChunks, { type: 'audio/webm' })
+    const blobObj = new Blob(audioChunks, { type: 'audio/wav' })
     const formData = new FormData()
     stopTimer()
-    formData.append('audio', blobObj, 'recorded_audio.webm')
+    formData.append('audio', blobObj, 'recorded_audio.wav')
     fetch('/upload-and-transcribe-audio', {
         method: 'POST',
         body: formData,
